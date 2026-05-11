@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pankeksu Website</title>
+    <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="win95-window">
+        <div class="window-title">
+            <div class="title-text">My Profile — Mae</div>
+            <div class="title-buttons">
+                <button class="minimize">_</button>
+                <button class="maximize">□</button>
+                <button class="close">×</button>
+            </div>
+        </div>
+
+        <div class="menu-bar">
+            <span class="menu-item">File</span>
+            <span class="menu-item">Edit</span>
+            <span class="menu-item">View</span>
+            <span class="menu-item">Help</span>
+        </div>
+
+        <div class="toolbar">
+            <button class="tool-button">📄</button>
+            <button class="tool-button">✂️</button>
+            <button class="tool-button">📋</button>
+            <button class="tool-button">💾</button>
+        </div>
+
+        <div class="window-content">
+            <div class="left-panel">
+                <ul class="folder-list" id="menu">
+                    <li data-target="about" class="selected"><a href="#about">📁 About</a></li>
+                    <li data-target="gallery"><a href="#gallery">📁 Gallery</a></li>
+                    <li data-target="friends"><a href="#friends">📁 Friends</a></li>
+                    <li data-target="guestbook"><a href="#guestbook">📁 Guestbook</a></li>
+                    <li data-target="paint"><a href="#paint">📁 Paint</a></li>
+                    <li data-target="settings"><a href="#settings">📁 Settings</a></li>
+                </ul>
+            </div>
+
+            <div class="right-panel" data-simplebar>
+                <div class="section" id="about">
+                    <h2>About</h2>
+                    <div class="about-content">
+                        <div class="about-text">
+                            <p><strong>Name:</strong> Mae</p>
+                            <p><strong>Occupation:</strong> Artist</p>
+                            <p><strong>About me:</strong> goku jumpscare</p>
+                            <p><strong>Contact:</strong> Discord: cassieaiello</p>
+                        </div>
+                        <div class="about-photo">
+                            <img src="materialsl/avatar.jpg" alt="My photo">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Галерея -->
+                <div class="section" id="gallery">
+                    <h2>Gallery</h2>
+                    <div class="gallery-breadcrumbs" id="gallery-breadcrumbs"></div>
+                    <div class="gallery-grid" id="gallery-container">
+                        <p>Loading gallery...</p>
+                    </div>
+                    <!-- Пагинация для галереи -->
+                    <div class="gallery-pagination">
+                        <button id="galleryPrevPageBtn" class="project-button" disabled>← Previous page</button>
+                        <span id="galleryPageIndicator" class="pagination-indicator">Page 1</span>
+                        <button id="galleryNextPageBtn" class="project-button" disabled>Next page →</button>
+                    </div>
+                </div>
+
+                <div class="section" id="friends">
+                    <h2>Friends</h2>
+                    <div class="friends-content" id="friends-container">
+                        <p>Loading friends...</p>
+                    </div>
+                </div>
+
+                <!-- Гостевая книга -->
+                <div class="section" id="guestbook">
+                    <h2>Guestbook</h2>
+                    <div class="guestbook-form">
+                        <p><strong>Leave a message:</strong></p>
+                        <input type="text" id="gbName" class="guestbook-input" placeholder="Your name">
+                        <textarea id="gbMessage" class="guestbook-textarea" rows="3" placeholder="Your message..."></textarea>
+                        <button id="gbSend" class="project-button guestbook-send">Send</button>
+                    </div>
+                    <div id="gbMessages" class="guestbook-messages"></div>
+                    
+                    <!-- Пагинация для гостевой книги -->
+                    <div class="guestbook-pagination">
+                        <button id="guestbookPrevPageBtn" class="project-button" disabled>← Previous page</button>
+                        <span id="guestbookPageIndicator" class="pagination-indicator">Page 1</span>
+                        <button id="guestbookNextPageBtn" class="project-button" disabled>Next page →</button>
+                    </div>
+                </div>
+
+                <!-- Paint с увеличенным холстом -->
+                <div class="section" id="paint">
+                    <h2>Paint</h2>
+                    <div class="paint-row">
+                        <div class="canvas-container">
+                            <canvas id="mainCanvas" width="570" height="380"></canvas>
+                            <canvas id="overlayCanvas" width="570" height="380"></canvas>
+                        </div>
+                        
+                        <div class="paint-panel">
+                            <div class="paint-toolbar">
+                                <button id="toolBrush" class="project-button active">Brush</button>
+                                <button id="toolEraser" class="project-button">Eraser</button>
+                                <button id="clearCanvas" class="project-button">Clear</button>
+                                <button id="saveCanvas" class="project-button">Save</button>
+                                <button id="undoBtn" class="project-button">Undo</button>
+                            </div>
+
+                            <div class="paint-size">
+                                <label>Size:</label>
+                                <input type="range" id="brushSizeSlider" min="1" max="20" value="2">
+                                <span id="brushSizeValue">2</span>
+                            </div>
+
+                            <div>
+                                <div class="color-palette" id="colorPalette"></div>
+                                <div class="color-picker-row">
+                                    <button id="pickColorBtn" class="project-button">Pick Color</button>
+                                    <div id="currentColorIndicator" class="color-indicator"></div>
+                                </div>
+                                <input type="color" id="colorPicker" class="hidden-color-picker">
+                            </div>
+
+                            <div class="paint-rgb">
+                                <div class="rgb-slider">
+                                    <label>R:</label>
+                                    <input type="range" id="redSlider" min="0" max="255" value="0">
+                                    <span id="redValue" class="rgb-value">0</span>
+                                </div>
+                                <div class="rgb-slider">
+                                    <label>G:</label>
+                                    <input type="range" id="greenSlider" min="0" max="255" value="0">
+                                    <span id="greenValue" class="rgb-value">0</span>
+                                </div>
+                                <div class="rgb-slider">
+                                    <label>B:</label>
+                                    <input type="range" id="blueSlider" min="0" max="255" value="0">
+                                    <span id="blueValue" class="rgb-value">0</span>
+                                </div>
+                                <div class="hex-input">
+                                    <label>Hex:</label>
+                                    <input type="text" id="hexInput" value="#000000" class="hex-field">
+                                    <button id="applyHex" class="project-button">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Панель слоёв -->
+                    <div class="layers-panel">
+                        <div class="layers-panel-header">
+                            <button id="addLayerBtn" class="project-button">➕ Add layer</button>
+                            <button id="deleteLayerBtn" class="project-button">➖ Delete layer</button>
+                            <button id="mergeDownBtn" class="project-button">⬇️ Merge down</button>
+                        </div>
+                        <div id="layersList" class="layers-list"></div>
+                    </div>
+
+                    <h3 class="recent-title">Recent Paintings</h3>
+                    <div id="paintGallery" class="paint-gallery"></div>
+                    <div class="paint-pagination">
+                        <button id="prevPageBtn" class="project-button" disabled>← Previous page</button>
+                        <span id="pageIndicator" class="pagination-indicator">Page 1</span>
+                        <button id="nextPageBtn" class="project-button" disabled>Next page →</button>
+                    </div>
+                </div>
+
+                <div class="section" id="settings">
+                    <h2>Settings</h2>
+                    <div class="settings-content">
+                        <p><input type="checkbox" id="soundsCheckbox"> Enable sounds</p>
+                        <p><input type="checkbox" id="tooltipsCheckbox"> Show tooltips</p>
+                        <p><input type="checkbox" id="autosaveCheckbox"> Auto-save</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <span>Ready</span>
+            <span>|</span>
+            <span>My Computer</span>
+        </div>
+    </div>
+
+    <!-- Модальное окно для просмотра рисунков -->
+    <div class="modal-overlay image-modal-overlay" id="imageModal">
+        <div class="modal image-modal">
+            <div class="modal-header">
+                <span class="modal-title">View Painting</span>
+                <span class="modal-close" id="closeImageModal">×</span>
+            </div>
+            <div class="modal-content">
+                <img id="modalImage" src="" alt="Full size painting">
+                <div id="modalLoading" class="modal-loading" style="display: none;">
+                    <span>Loading</span>
+                    <span class="loading-dots">...</span>
+                </div>
+                <div class="modal-likes">
+                    <span id="modalLikes">0</span> likes
+                    <button id="modalLikeBtn" class="like-button"></button>
+                    <div id="modalDate" class="modal-date"></div>
+                </div>
+                <div class="modal-nav">
+                    <button id="modalPrevBtn" class="project-button">← Previous</button>
+                    <button id="modalRandomBtn" class="project-button">🎲 Random</button>
+                    <button id="modalNextBtn" class="project-button">Next →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно капчи -->
+    <div class="modal-overlay captcha-overlay" id="captchaOverlay">
+        <div class="modal captcha-modal" id="captchaModal">
+            <h3>Verification</h3>
+            <div class="captcha-question" id="captchaQuestion">2 + 3 = ?</div>
+            <input type="text" id="captchaAnswer" class="captcha-input" placeholder="Enter answer">
+            <div class="captcha-buttons">
+                <button id="captchaOk" class="project-button">OK</button>
+                <button id="captchaCancel" class="project-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для переименования слоя -->
+    <div class="modal-overlay rename-modal-overlay" id="renameLayerModal">
+        <div class="modal rename-modal">
+            <div class="modal-header">
+                <span class="modal-title">Rename Layer</span>
+                <span class="modal-close" id="closeRenameModal">×</span>
+            </div>
+            <div class="modal-content">
+                <p>Enter new layer name:</p>
+                <input type="text" id="renameLayerInput" class="rename-input" placeholder="Layer name" maxlength="30">
+                <div class="rename-buttons">
+                    <button id="renameLayerOk" class="project-button">OK</button>
+                    <button id="renameLayerCancel" class="project-button">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для галереи -->
+    <div class="modal-overlay gallery-modal-overlay" id="galleryModal">
+        <div class="modal gallery-modal">
+            <div class="modal-header">
+                <span class="modal-title">Gallery Image</span>
+                <span class="modal-close" id="closeGalleryModal">×</span>
+            </div>
+            <div class="modal-content">
+                <img id="galleryModalImage" src="" alt="Gallery image">
+                <div id="galleryModalLoading" class="modal-loading" style="display: none;">
+                    <span>Loading</span>
+                    <span class="loading-dots">...</span>
+                </div>
+                <div class="modal-nav">
+                    <button id="galleryModalPrevBtn" class="project-button">← Previous</button>
+                    <button id="galleryModalNextBtn" class="project-button">Next →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clippy -->
+    <div class="clippy-container" id="clippyContainer">
+        <div class="clippy-bubble" id="clippyMessage"></div>
+        <img src="materialsl/clippy/idle/frame1.png" class="clippy-character" id="clippyImage" alt="Clippy">
+    </div>
+
+    <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="clippy.js"></script>
+    <script src="custom_wallpaper.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
